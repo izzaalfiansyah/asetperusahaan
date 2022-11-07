@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans&display=swap');
+
+* {
+	outline: none;
+}
+
+html,
+body {
+	font-family: 'Public Sans', sans-serif;
+	font-size: 0.98rem;
+	color: #697a8d;
+	overflow-x: hidden;
+}
+
+.shadow {
+	box-shadow: 0 2px 6px 0 rgb(67 89 113 / 12%);
+}
+
+main > * {
+	animation: fade 0.8s;
+}
+
+@keyframes fade {
+	from {
+		opacity: 0;
+	}
+}
+
+.animate-left {
+	animation: left 0.5s;
+}
+
+@keyframes left {
+	from {
+		transform: translateX(100%);
+	}
+}
+
+.modal {
+	animation: none !important;
+}
+
+.modal > div {
+	animation: up 0.5s;
+}
+
+@keyframes up {
+	from {
+		transform: translateY(100%);
+	}
+}
+
+a {
+	text-decoration: none;
+}
+
+#sidebar .open .sub-icon {
+	transform: rotate(90deg);
+}
+
+#sidebar .open .sub-menu {
+	opacity: 1;
+	height: auto;
+}
+
+#sidebar .open > div:first-child {
+	@apply bg-gray-50;
+}
