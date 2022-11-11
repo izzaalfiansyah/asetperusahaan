@@ -1,5 +1,5 @@
 import { createSignal, onMount, Show } from 'solid-js';
-import { Card, Loading, Map } from '../component';
+import { Card, Loading } from '../../component';
 
 export default function () {
 	const [loading, setLoading] = createSignal(true);
@@ -21,7 +21,7 @@ export default function () {
 
 	return (
 		<>
-			<div class="grid lg:grid-cols-4 grid-cols-1 gap-x-5 text-center relative">
+			<div class="grid lg:grid-cols-4 sm:grid-cols-2 grid-cols-1 gap-x-5 text-center relative">
 				{asetCard('Aset Bangungan', 557, 'text-green-400')}
 				{asetCard('Aset Transportasi', 14, 'text-blue-400')}
 				{asetCard('Aset Bisnis & Investasi', 160, 'text-lime-400')}

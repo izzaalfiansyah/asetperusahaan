@@ -1,11 +1,13 @@
 import { createSignal, onMount, Show } from 'solid-js';
-import { Button, Card, Header, Input, Loading, Textarea } from '../component';
-import { showSnackbar } from '../lib';
-import { User } from './User';
+import { Button, Card, Header, Input, Loading, Textarea } from '../../component';
+import { auth, showSnackbar } from '../../lib';
+import { findUser, updateUser } from '../user/service';
+import { User } from '../user/type';
 
 export default function () {
 	const [req, setReq] = createSignal<User>({});
 	const [loading, setLoading] = createSignal(false);
+	const userId = auth.id;
 
 	function handleReq(key: string, value: any) {
 		setReq((item) => {
@@ -15,23 +17,14 @@ export default function () {
 
 	async function get() {
 		await setLoading(true);
-		await new Promise((resolve) => {
-			setTimeout(() => {
-				setReq({
-					username: 'superadmin',
-					password: '',
-					nama: 'Muhammad Izza Alfiansyah',
-					telepon: '6281231921251',
-					alamat: 'Gumukmas - Jember',
-				});
-				resolve(true);
-			}, 500);
-		});
+		const res = await findUser(userId);
+		setReq(res?.data);
 		setLoading(false);
 	}
 
 	async function update(e: any) {
 		e.preventDefault();
+		await updateUser(userId, req());
 		showSnackbar('data berhasil disimpan');
 	}
 

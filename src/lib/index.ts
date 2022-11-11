@@ -1,3 +1,9 @@
+import axios from 'axios';
+
+export const http = axios.create({
+	baseURL: (window as any).apiURL || 'http://localhost:8000',
+});
+
 export const readFile = (file: any, callback: Function) => {
 	let reader = new FileReader();
 	reader.readAsDataURL(file);

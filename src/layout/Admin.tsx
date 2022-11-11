@@ -139,7 +139,12 @@ export default function () {
 				<div class="sub-menu transition h-0 opacity-0">
 					<For each={item.children}>
 						{(subitem) => (
-							<NavLink href={subitem.path}>
+							<NavLink
+								href={subitem.path}
+								onClick={() => {
+									toggleSidebar();
+								}}
+							>
 								<div
 									class="p-2.5 px-4 flex items-center rounded-lg transition mb-1 hover:bg-gray-50 justify-between"
 									classList={{
@@ -160,8 +165,8 @@ export default function () {
 		) : (
 			<NavLink
 				onClick={(e) => {
-					e.preventDefault();
 					if (item.onClick) {
+						e.preventDefault();
 						item.onClick();
 					} else {
 						document.querySelectorAll('#sidebar a').forEach((el) => {

@@ -1,14 +1,14 @@
 import { Route, Routes } from '@solidjs/router';
-import Akun from '../pages/Akun';
-import KategoriAset from '../pages/KategoriAset';
-import Dashboard from '../pages/Dashboard';
+import Akun from '../pages/akun';
+import KategoriAset from '../pages/kategori-aset';
+import Dashboard from '../pages/dashboard';
+import RiwayatAset from '../pages/riwayat-aset';
 import Galeri from '../pages/Galeri';
 import Pengaturan from '../pages/Pengaturan';
 import Pengumuman from '../pages/Pengumuman';
-import User from '../pages/User';
-import RiwayatAset from '../pages/RiwayatAset';
-import NilaiAset from '../pages/NilaiAset';
-import LokasiAset from '../pages/LokasiAset';
+import User from '../pages/user';
+import NilaiAset from '../pages/nilai-aset';
+import LokasiAset from '../pages/lokasi-aset';
 
 export default function () {
 	return (
