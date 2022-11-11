@@ -159,7 +159,8 @@ export default function () {
 			</a>
 		) : (
 			<NavLink
-				onClick={(e: any) => {
+				onClick={(e) => {
+					e.preventDefault();
 					if (item.onClick) {
 						item.onClick();
 					} else {
@@ -241,8 +242,7 @@ export default function () {
 							title: 'Logout',
 							path: '/logout',
 							icon: <FaSolidDoorOpen class="fill-gray-500" />,
-							onClick: (e: any) => {
-								e.preventDefault();
+							onClick: () => {
 								setModalLogout(true);
 							},
 						})}

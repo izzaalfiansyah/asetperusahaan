@@ -148,6 +148,27 @@ export function Input(
 	);
 }
 
+export function Checkbox(
+	props: JSX.InputHTMLAttributes<HTMLInputElement> & {
+		label?: string;
+	},
+) {
+	const [{ label }, other] = splitProps(props, ['label']);
+
+	return (
+		<div class="flex mb-3 items-center">
+			<input
+				type="checkbox"
+				class="rounded mr-2 text-primary p-2 border border-gray-100 focus:ring-primary"
+				{...other}
+			/>
+			<Show when={label}>
+				<span>{label}</span>
+			</Show>
+		</div>
+	);
+}
+
 export function Textarea(
 	props: JSX.TextareaHTMLAttributes<HTMLTextAreaElement> & {
 		label?: string;
@@ -234,8 +255,9 @@ export function Footer() {
 export function Map(
 	props: JSX.HTMLAttributes<HTMLDivElement> & {
 		id: string;
-		marker: any;
+		marker?: any;
 		click?: boolean;
+		onSet?: any;
 	},
 ) {
 	const [marker, setMarker] = createSignal<any>(null);
@@ -256,8 +278,8 @@ export function Map(
 			marker().remove();
 		}
 
-		const mark = L.circle(latlng, { radius: 50 }).addTo(map);
-		console.log(latlng);
+		const mark = L.marker(latlng).addTo(map);
+
 		setMarker(mark);
 	}
 
@@ -279,25 +301,26 @@ export function Map(
 
 		L.control.layers(baseMaps).addTo(map);
 
-		if (props.marker) {
-			handleMarker(map, {
-				lat: props.marker[0],
-				lng: props.marker[1],
-			});
-
-			map.fitBounds(marker().getBounds());
-		}
-
-		L.geoJSON(
-			JSON.parse(
-				'{"type":"Feature","properties":{},"geometry":{"type":"Point","coordinates":[113.702187,-8.168945]}}',
-			),
-		).addTo(map);
-
-		if (props.click == null ? true : false) {
+		if (props.click == null) {
 			map.on('click', (e) => {
 				handleMarker(map, e.latlng);
+
+				if (props.onSet) {
+					props.onSet(e.latlng);
+				}
 			});
+		}
+
+		if (props.marker) {
+			const lat = props.marker[0];
+			const lng = props.marker[1];
+
+			handleMarker(map, {
+				lat,
+				lng,
+			});
+
+			map.fitBounds(L.latLngBounds(L.latLng(lat, lng), L.latLng(lat, lng)));
 		}
 
 		setTimeout(() => {
@@ -306,4 +329,14 @@ export function Map(
 	});
 
 	return <div {...props}></div>;
+}
+
+export function Form(
+	props: JSX.HTMLAttributes<HTMLFormElement> & {
+		rules?: Array<any>;
+	},
+) {
+	const [{ rules }, other] = splitProps(props, ['rules']);
+
+	return <form {...other}>{other.children}</form>;
 }

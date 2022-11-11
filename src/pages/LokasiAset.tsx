@@ -162,9 +162,10 @@ export default function (props: { jenis: string }) {
 									<button
 										class="text-primary mr-3"
 										onClick={() => {
+											setReq({ ...item });
 											setModalSave(true);
 											setEdit(true);
-											setReq({ ...item });
+											nullable();
 										}}
 									>
 										<FaSolidPen />
@@ -189,7 +190,7 @@ export default function (props: { jenis: string }) {
 			</Card>
 
 			<form onSubmit={save}>
-				<Modal model={[modalSave, setModalSave]}>
+				<Modal model={[modalSave, setModalSave]} width="lg:w-900px">
 					<div class="text-xl mb-5">{edit() ? 'Edit' : 'Tambah'} Data</div>
 					<Select
 						label="Jenis Aset"
@@ -210,12 +211,17 @@ export default function (props: { jenis: string }) {
 							},
 						]}
 					></Select>
-					<Input
-						label="Lokasi"
-						placeholder="Masukkan Lokasi"
-						value={req()?.lokasi}
-						onInput={(e: any) => handleReq('lokasi', e.target.value)}
-					></Input>
+					<div class="mb-4">
+						<div class="mb-1">Lokasi</div>
+						<Map
+							id="map"
+							class="h-300px"
+							onSet={(e: any) => {
+								handleReq('lokasi', [e.lat, e.lng]);
+							}}
+							marker={req().lokasi}
+						></Map>
+					</div>
 
 					<div class="mt-10 text-right">
 						<Button variant="primary" type="submit">
@@ -238,7 +244,7 @@ export default function (props: { jenis: string }) {
 
 			<Modal model={[modalMap, setModalMap]} width="lg:w-900px">
 				<div>
-					<Map id="map" class="h-500px" marker={req().lokasi}></Map>
+					<Map id="map" class="h-500px" click={false} marker={req().lokasi}></Map>
 				</div>
 			</Modal>
 		</>

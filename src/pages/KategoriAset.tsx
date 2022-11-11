@@ -202,6 +202,7 @@ export default function (props: { jenis: string }) {
 												onClick={() => {
 													setModalSave(true);
 													setEdit(true);
+													nullable();
 													setReq({ ...item });
 												}}
 											>

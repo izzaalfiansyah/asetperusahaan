@@ -234,9 +234,8 @@ export default function () {
 											setModalSave(true);
 											setEdit(true);
 
+											nullable();
 											setReq({ ...item });
-
-											setTimeout(() => {}, 1000);
 										}}
 									>
 										<FaSolidPen />

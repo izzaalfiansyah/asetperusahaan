@@ -162,6 +162,7 @@ export default function () {
 										onClick={() => {
 											setModalSave(true);
 											setEdit(true);
+											nullable();
 											setReq({ ...item });
 										}}
 									>
