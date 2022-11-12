@@ -1,17 +1,11 @@
 import { createSignal, onMount, Show } from 'solid-js';
-import { Button, Card, Header, Input, Loading, Textarea } from '../component';
-import { showSnackbar } from '../lib';
-
-export interface Perusahaan {
-	nama?: string;
-	logo?: string;
-	sejarah?: string;
-	visi?: string;
-	misi?: string;
-}
+import { Button, Card, Header, Input, Loading, Textarea } from '../../component';
+import { showSnackbar } from '../../lib';
+import { getPengaturan, updatePengaturan } from './service';
+import { Pengaturan } from './type';
 
 export default function () {
-	const [req, setReq] = createSignal<Perusahaan>({});
+	const [req, setReq] = createSignal<Pengaturan>({});
 	const [loading, setLoading] = createSignal(false);
 
 	function handleReq(key: string, value: any) {
@@ -22,24 +16,14 @@ export default function () {
 
 	async function get() {
 		await setLoading(true);
-		await new Promise((resolve) => {
-			setTimeout(() => {
-				setReq({
-					nama: 'e-aset',
-					logo: '',
-					sejarah:
-						'Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit nihil blanditiis, beatae consequatur enim cum nam numquam! Exercitationem voluptas magnam rem fuga, eius laborum ratione. Eius voluptatum architecto nostrum deserunt.',
-					visi: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit nihil blanditiis, beatae consequatur enim cum nam numquam! Exercitationem voluptas magnam rem fuga, eius laborum ratione. Eius voluptatum architecto nostrum deserunt.',
-					misi: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit nihil blanditiis, beatae consequatur enim cum nam numquam! Exercitationem voluptas magnam rem fuga, eius laborum ratione. Eius voluptatum architecto nostrum deserunt.',
-				});
-				resolve(true);
-			}, 500);
-		});
+		const res = await getPengaturan();
+		setReq(res?.data);
 		setLoading(false);
 	}
 
 	async function update(e: any) {
 		e.preventDefault();
+		await updatePengaturan(req());
 		showSnackbar('data berhasil disimpan');
 	}
 
